@@ -13,8 +13,17 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+info:
+  app:
+    info: "Maps microservice"
     
 management:
+  info:
+    java:
+      enabled: true
+    env:
+      enabled: true
   endpoints:
     web:
       exposure:
