@@ -1,0 +1,30 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: "notifications"
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    password: admin
+#    url: jdbc:postgresql://localhost:5432/myPin
+#    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+info:
+  app:
+    info: "Notifications microservice"
+    
+management:
+  info:
+    java:
+      enabled: true
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
