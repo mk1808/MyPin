@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: "maps"
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    password: admin
+#    url: jdbc:postgresql://localhost:5432/myPin
+#    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
