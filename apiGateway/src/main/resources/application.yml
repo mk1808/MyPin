@@ -8,8 +8,7 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: false
-          lowerCaseServiceId: true
+          enabled: true
 
 info:
   app:
@@ -21,6 +20,7 @@ management:
       enabled: true
     env:
       enabled: true
+      
   endpoints:
     web:
       exposure:
@@ -29,11 +29,6 @@ management:
     gateway:
       enabled: true
       
-
-
-endpoints:
-  shutdown:
-    enabled: true
 
 eureka:
   instance:
