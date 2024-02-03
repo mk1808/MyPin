@@ -1,10 +1,10 @@
 package com.mypin.maps.services;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 
+import com.mypin.maps.models.Map;
+
 @Service
-public interface IMapsService extends ICrudService<UUID>{
+public interface IMapsService extends ICrudService<Map>{
 
 }
