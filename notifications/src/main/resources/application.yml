@@ -4,11 +4,11 @@ server:
 spring:
   application:
     name: "notifications"
-#  datasource:
-#    driver-class-name: org.postgresql.Driver
-#    password: admin
-#    url: jdbc:postgresql://localhost:5432/myPin
-#    username: postgres
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: admin
+    url: jdbc:postgresql://localhost:5434/notificationsDb
+    username: admin
   jpa:
     hibernate:
       ddl-auto: update
