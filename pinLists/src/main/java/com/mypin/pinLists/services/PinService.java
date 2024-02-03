@@ -2,32 +2,32 @@ package com.mypin.pinLists.services;
 
 import java.util.UUID;
 
-import com.mypin.pinLists.models.PinList;
-import com.mypin.pinLists.repositories.IPinListsRepository;
+import com.mypin.pinLists.models.Pin;
+import com.mypin.pinLists.repositories.IPinRepository;
 
-public class PinListsService implements IPinListsService {
+public class PinService implements IPinService {
 
-	private final IPinListsRepository repository;
+	private final IPinRepository repository;
 
-	public PinListsService(IPinListsRepository repository) {
+	public PinService(IPinRepository repository) {
 		super();
 		this.repository = repository;
 	}
 
 	@Override
-	public PinList save(PinList obj) {
+	public Pin save(Pin obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PinList update(PinList obj, UUID id) {
+	public Pin update(Pin obj, UUID id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PinList get(UUID id) {
+	public Pin get(UUID id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
