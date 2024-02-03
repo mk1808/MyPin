@@ -11,13 +11,11 @@ spring:
     username: admin
   jpa:
     hibernate:
-    
       ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
   sql:
     init:
       mode: always

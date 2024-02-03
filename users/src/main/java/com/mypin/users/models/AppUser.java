@@ -21,6 +21,8 @@ public class AppUser {
 	private String email;
 	@NotBlank
 	private String login;
+	
+	
 	public UUID getId() {
 		return id;
 	}
