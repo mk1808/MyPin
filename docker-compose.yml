@@ -1,0 +1,206 @@
+version: '3.9'
+
+services:
+  eureka:
+    image: "mk1808/eureka:v1"
+    container_name: eureka-ms
+    ports:
+      - "8070:8070"
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  mapsDb:
+    image: postgres
+    container_name: mapsDb
+    ports:
+      - 5435:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - E:/myPin_dbFiles/mapsDb:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=mapsDb
+
+  maps:
+    image: "mk1808/maps:v1"
+    container_name: maps-ms
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      eureka:
+        condition: service_healthy
+      mapsDb:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://mapsDb:5432/mapsDb"
+
+  pinListsDb:
+    image: postgres
+    container_name: pinListsDb
+    ports:
+      - 5431:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - E:/myPin_dbFiles/pinListsDb:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=pinListsDb
+
+  pinlists:
+    image: "mk1808/pinlists:v1"
+    container_name: pinlists-ms
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      eureka:
+        condition: service_healthy
+      mapsDb:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://pinListsDb:5432/pinListsDb"
+
+  usersDb:
+    image: postgres
+    container_name: usersDb
+    ports:
+      - 5433:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - E:/myPin_dbFiles/usersDb:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=usersDb
+
+  users:
+    image: "mk1808/users:v1"
+    container_name: users-ms
+    ports:
+      - "8082:8082"
+    healthcheck:
+      test: "curl --fail --silent localhost:8082/actuator/health | grep UP || exit 1"
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      eureka:
+        condition: service_healthy
+      usersDb:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://usersDb:5432/usersDb"
+
+  notificationsDb:
+    image: postgres
+    container_name: notificationsDb
+    ports:
+      - 5434:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - E:/myPin_dbFiles/notificationsDb:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=notificationsDb
+
+  notifications:
+    image: "mk1808/notifications:v1"
+    container_name: notifications-ms
+    ports:
+      - "8083:8083"
+    healthcheck:
+      test: "curl --fail --silent localhost:8083/actuator/health | grep UP || exit 1"
+      interval: 30s
+      timeout: 60s
+      retries: 10
+      start_period: 20s
+    depends_on:
+      eureka:
+        condition: service_healthy
+      notificationsDb:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://notificationsDb:5432/notificationsDb"
+
+  synchronization:
+    image: "mk1808/synchronization:v1"
+    container_name: synchronization-ms
+    ports:
+      - "8084:8084"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    depends_on:
+      eureka:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
+    
+  gateway:
+    image: "mk1808/apigateway:v1"
+    container_name: gateway-ms
+    ports:
+      - "8072:8072"
+    healthcheck:
+      test: "curl --fail --silent localhost:8072/actuator/health | grep UP || exit 1"
+      interval: 30s
+      timeout: 60s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      maps:
+        condition: service_healthy
+      pinlists:
+        condition: service_healthy
+      users:
+        condition: service_healthy
+      notifications:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"    
