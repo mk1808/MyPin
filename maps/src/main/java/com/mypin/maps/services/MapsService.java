@@ -2,6 +2,7 @@ package com.mypin.maps.services;
 
 import java.util.UUID;
 
+import com.mypin.maps.models.Map;
 import com.mypin.maps.repositories.IMapsRepository;
 
 public class MapsService implements IMapsService {
@@ -14,19 +15,19 @@ public class MapsService implements IMapsService {
 	}
 
 	@Override
-	public UUID save(UUID obj) {
+	public Map save(Map obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public UUID update(UUID obj, UUID id) {
+	public Map update(Map obj, UUID id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public UUID get(UUID id) {
+	public Map get(UUID id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -36,5 +37,7 @@ public class MapsService implements IMapsService {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 }
