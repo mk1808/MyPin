@@ -141,7 +141,6 @@ public class MapsService implements IMapsService {
 	@Override
 	public List<Map> search(String title, MapSort sort, Boolean isSharedWithMe, Boolean isMyOwn) {
 		Specification<Map> specification = MapSpecification.filter(title, sort, isMyOwn, isSharedWithMe);
-
 		return repository.findAll(specification);
 
 	}
