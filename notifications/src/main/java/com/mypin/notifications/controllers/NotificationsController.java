@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mypin.notifications.dtos.NotificationDto;
 import com.mypin.notifications.models.Notification;
@@ -12,6 +13,7 @@ import com.mypin.notifications.services.INotificationsService;
 
 import jakarta.validation.Valid;
 
+@RestController
 public class NotificationsController implements INotificationsController {
 	
 	private final INotificationsService notificationService;

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mypin.pinLists.models.Pin;
 import com.mypin.pinLists.models.PinList;
@@ -12,6 +13,7 @@ import com.mypin.pinLists.services.IPinListsService;
 
 import jakarta.validation.Valid;
 
+@RestController
 public class PinListsController implements IPinListsController {
 
 	private final IPinListsService pinListsService;

@@ -2,9 +2,12 @@ package com.mypin.maps.services;
 
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
 import com.mypin.maps.models.Map;
 import com.mypin.maps.repositories.IMapsRepository;
 
+@Service
 public class MapsService implements IMapsService {
 	
 	private final IMapsRepository repository;

@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mypin.users.dtos.RegisterDto;
 import com.mypin.users.models.AppUser;
@@ -11,6 +12,7 @@ import com.mypin.users.services.IUsersService;
 
 import jakarta.validation.Valid;
 
+@RestController
 public class UsersController implements IUsersController {
 	
 	private final IUsersService usersService;

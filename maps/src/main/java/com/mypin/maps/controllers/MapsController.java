@@ -1,10 +1,12 @@
 package com.mypin.maps.controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mypin.maps.dtos.SharingDto;
 import com.mypin.maps.models.Map;
@@ -13,6 +15,7 @@ import com.mypin.maps.services.IMapsService;
 
 import jakarta.validation.Valid;
 
+@RestController
 public class MapsController implements IMapsController {
 	
 	private final IMapsService mapsService;

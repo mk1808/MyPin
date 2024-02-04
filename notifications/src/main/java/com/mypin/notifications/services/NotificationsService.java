@@ -2,9 +2,12 @@ package com.mypin.notifications.services;
 
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
 import com.mypin.notifications.models.Notification;
 import com.mypin.notifications.repositories.INotificationsRepository;
 
+@Service
 public class NotificationsService implements INotificationsService {
 
 	private final INotificationsRepository notificationRepository;
