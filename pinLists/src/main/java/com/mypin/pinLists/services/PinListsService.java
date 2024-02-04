@@ -2,16 +2,22 @@ package com.mypin.pinLists.services;
 
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
+import com.mypin.pinLists.clients.IMapsFeignClient;
 import com.mypin.pinLists.models.PinList;
 import com.mypin.pinLists.repositories.IPinListsRepository;
 
+@Service
 public class PinListsService implements IPinListsService {
 
 	private final IPinListsRepository repository;
+	private final IMapsFeignClient feignClient;
 
-	public PinListsService(IPinListsRepository repository) {
+	public PinListsService(IPinListsRepository repository, IMapsFeignClient feignClient) {
 		super();
 		this.repository = repository;
+		this.feignClient = feignClient;
 	}
 
 	@Override

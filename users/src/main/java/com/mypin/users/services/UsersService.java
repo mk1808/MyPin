@@ -2,9 +2,12 @@ package com.mypin.users.services;
 
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
 import com.mypin.users.models.AppUser;
 import com.mypin.users.repositories.IUsersRepository;
 
+@Service
 public class UsersService implements IUsersService {
 	private final IUsersRepository repository;
 
