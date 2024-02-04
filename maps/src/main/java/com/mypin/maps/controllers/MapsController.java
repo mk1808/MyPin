@@ -1,6 +1,5 @@
 package com.mypin.maps.controllers;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mypin.maps.dtos.SharingDto;
+import com.mypin.maps.enums.MapSort;
 import com.mypin.maps.models.Map;
 import com.mypin.maps.models.Sharing;
 import com.mypin.maps.services.IMapsService;
@@ -17,7 +17,7 @@ import jakarta.validation.Valid;
 
 @RestController
 public class MapsController implements IMapsController {
-	
+
 	private final IMapsService mapsService;
 
 	public MapsController(IMapsService mapsService) {
@@ -27,41 +27,44 @@ public class MapsController implements IMapsController {
 
 	@Override
 	public ResponseEntity<Map> create(@Valid Map map) {
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		Map newMap = mapsService.save(map);
+		return ResponseEntity.status(HttpStatus.CREATED).body(newMap);
 	}
 
 	@Override
 	public ResponseEntity<Map> get(UUID id) {
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		Map map = mapsService.get(id);
+		return ResponseEntity.status(HttpStatus.OK).body(map);
 	}
 
 	@Override
-	public ResponseEntity<List<Map>> search(String name, String sort, String sharedToMe, String myOwn) {
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+	public ResponseEntity<List<Map>> search(String title, MapSort sort, Boolean isSharedWithMe, Boolean isMyOwn) {
+		List<Map> list = mapsService.search(title, sort, isSharedWithMe, isMyOwn);
+		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 
 	@Override
 	public ResponseEntity patchName(UUID id, String name) {
+		mapsService.patchName(name, id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@Override
 	public ResponseEntity patchUpdated(UUID id) {
+		mapsService.patchUpdated(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@Override
 	public ResponseEntity<Sharing> share(UUID id, @Valid SharingDto sharingDto) {
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		Sharing sharing = mapsService.share(id, sharingDto);
+		return ResponseEntity.status(HttpStatus.OK).body(sharing);
 	}
 
 	@Override
 	public ResponseEntity notify(UUID id) {
+		mapsService.notify(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
-
-	
-	
-	
 
 }

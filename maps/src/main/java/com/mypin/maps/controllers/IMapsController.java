@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mypin.maps.dtos.SharingDto;
+import com.mypin.maps.enums.MapSort;
 import com.mypin.maps.models.Map;
 import com.mypin.maps.models.Sharing;
 
@@ -33,8 +34,8 @@ public interface IMapsController {
 
 	@GetMapping("/search")
 	public ResponseEntity<List<Map>> search(
-			@RequestParam String name, @RequestParam String sort,
-			@RequestParam String sharedToMe, @RequestParam String myOwn);
+			@RequestParam String title, @RequestParam MapSort sort,
+			@RequestParam Boolean isSharedWithMe, @RequestParam Boolean isMyOwn);
 
 	@PatchMapping("/{id}/name")
 	public ResponseEntity patchName(@PathVariable UUID id, @RequestParam String name);
