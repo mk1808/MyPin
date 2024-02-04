@@ -12,7 +12,7 @@ import jakarta.validation.Valid;
 @FeignClient("synchronization")
 public interface ISynchronizationFeignClient {
 	
-	@PostMapping
+	@PostMapping("/api")
 	public ResponseEntity sendSynchronizationMessage(@Valid @RequestBody SynchronizationDto synchronizationDto);
 
 }

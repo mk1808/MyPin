@@ -12,7 +12,7 @@ import jakarta.validation.Valid;
 @FeignClient("notifications")
 public interface INotificationsFeignClient {
 	
-	@PostMapping
+	@PostMapping("/api")
 	public ResponseEntity<NotificationDto> create(@Valid @RequestBody NotificationDto map);
 
 }
