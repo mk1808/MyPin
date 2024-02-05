@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mypin.pinLists.dtos.PinListDto;
 import com.mypin.pinLists.models.Pin;
 import com.mypin.pinLists.models.PinList;
 
@@ -25,7 +26,7 @@ import jakarta.validation.Valid;
 public interface IPinListsController {
 	
 	@GetMapping("/{mapId}")
-	public ResponseEntity<List<PinList>> get(@PathVariable UUID mapId);
+	public ResponseEntity<List<PinListDto>> get(@PathVariable UUID mapId);
 
 	@PostMapping
 	public ResponseEntity<PinList> createPinList(@Valid @RequestBody PinList pinList);
