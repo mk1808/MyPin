@@ -1,5 +1,6 @@
 package com.mypin.notifications.repositories;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ import com.mypin.notifications.models.Notification;
 @Repository
 public interface INotificationsRepository extends JpaRepository<Notification, UUID> {
 
+	List<Notification> findByOwnerIdOrderByConfirmedAscUpdatedDateDesc(UUID ownerId);
 }

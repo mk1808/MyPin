@@ -28,7 +28,7 @@ public interface INotificationsController {
 
 	@PatchMapping("/{id}")
 	public ResponseEntity confirm(@PathVariable UUID id);
-	
+
 	@PostMapping
-	public ResponseEntity<NotificationDto> create(@Valid @RequestBody NotificationDto map);
+	public ResponseEntity<Notification> create(@Valid @RequestBody NotificationDto map);
 }

@@ -15,26 +15,27 @@ import jakarta.validation.Valid;
 
 @RestController
 public class NotificationsController implements INotificationsController {
-	
+
 	private final INotificationsService notificationService;
-	
+
 	public NotificationsController(INotificationsService notificationService) {
 		this.notificationService = notificationService;
 	}
 
 	@Override
 	public ResponseEntity<List<Notification>> get() {
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		return ResponseEntity.status(HttpStatus.OK).body(notificationService.getUserNotifications());
 	}
 
 	@Override
 	public ResponseEntity confirm(UUID id) {
+		notificationService.confirm(id);
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 
 	@Override
-	public ResponseEntity<NotificationDto> create(@Valid NotificationDto map) {
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+	public ResponseEntity<Notification> create(@Valid NotificationDto map) {
+		return ResponseEntity.status(HttpStatus.OK).body(notificationService.save(map));
 	}
 
 }
