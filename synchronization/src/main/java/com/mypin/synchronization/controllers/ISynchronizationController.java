@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mypin.synchronization.dtos.MessageDto;
 import com.mypin.synchronization.dtos.SynchronizationDto;
 
 import jakarta.validation.Valid;
@@ -18,4 +19,6 @@ public interface ISynchronizationController {
 
 	@PostMapping
 	public ResponseEntity sendSynchronizationMessage(@Valid @RequestBody SynchronizationDto synchronizationDto);
+
+	public MessageDto send(final MessageDto message) throws Exception;
 }
