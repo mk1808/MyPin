@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 public interface ISynchronizationController {
 
 	@PostMapping
-	public ResponseEntity sendSynchronizationMessage(@Valid @RequestBody SynchronizationDto synchronizationDto);
+	public ResponseEntity<SynchronizationDto> sendSynchronizationMessage(@Valid @RequestBody SynchronizationDto synchronizationDto);
 
 	@MessageMapping("/synchronize")
 	public SynchronizationDto send(@Valid SynchronizationDto message) throws Exception;
