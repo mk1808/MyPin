@@ -8,6 +8,5 @@ import com.mypin.synchronization.dtos.SynchronizationDto;
 @Service
 public interface ISynchronizationService {
 
-	@PostMapping
-	public void sendSynchronizationMessage(SynchronizationDto synchronizationDto);
+	void send(SynchronizationDto synchronizationDto);
 }

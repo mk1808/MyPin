@@ -10,10 +10,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.mypin.maps.clients.INotificationsFeignClient;
+import com.mypin.maps.clients.ISynchronizationFeignClient;
 import com.mypin.maps.clients.IUsersFeignClient;
 import com.mypin.maps.dtos.AppUserDto;
 import com.mypin.maps.dtos.NotificationDto;
 import com.mypin.maps.dtos.SharingDto;
+import com.mypin.maps.dtos.SynchronizationDto;
 import com.mypin.maps.enums.MapSort;
 import com.mypin.maps.enums.NotificationType;
 import com.mypin.maps.exceptions.ResourceNotFoundException;
@@ -31,14 +33,16 @@ public class MapsService implements IMapsService {
 	private final ISharingRepository sharingRepository;
 	private final IUsersFeignClient usersFeignClient;
 	private final INotificationsFeignClient notificationsFeignClient;
+	private final ISynchronizationFeignClient synchronizationFeignClient;
 
 	public MapsService(IMapsRepository repository, ISharingRepository sharingRepository,
-			IUsersFeignClient usersFeignClient, INotificationsFeignClient notificationsFeignClient) {
+			IUsersFeignClient usersFeignClient, INotificationsFeignClient notificationsFeignClient, ISynchronizationFeignClient synchronizationFeignClient) {
 		super();
 		this.repository = repository;
 		this.sharingRepository = sharingRepository;
 		this.usersFeignClient = usersFeignClient;
 		this.notificationsFeignClient = notificationsFeignClient;
+		this.synchronizationFeignClient = synchronizationFeignClient;
 	}
 
 	@Override
@@ -91,6 +95,7 @@ public class MapsService implements IMapsService {
 		Map existingMap = map.get();
 		existingMap.setTitle(name);
 		existingMap.setUpdatedDate(new Date());
+		synchronizeMap(existingMap);
 		return repository.save(existingMap);
 	}
 
@@ -102,6 +107,7 @@ public class MapsService implements IMapsService {
 		}
 		Map existingMap = map.get();
 		existingMap.setUpdatedDate(new Date());
+		synchronizeMap(existingMap);
 		return repository.save(existingMap);
 	}
 
@@ -145,6 +151,14 @@ public class MapsService implements IMapsService {
 		Specification<Map> specification = MapSpecification.filter(title, sort, isMyOwn, isSharedWithMe, UUID.fromString("accd2a12-8d3b-438e-8a73-d12e3419030b"));
 		return repository.findAll(specification);
 
+	}
+	
+	private void synchronizeMap(Map map) {
+		
+		SynchronizationDto synchronizationDto = new SynchronizationDto();
+		synchronizationDto.channel = map.getId().toString();
+		synchronizationDto.content = ""; // TODO fill map
+		synchronizationFeignClient.sendSynchronizationMessage(synchronizationDto);
 	}
 
 }

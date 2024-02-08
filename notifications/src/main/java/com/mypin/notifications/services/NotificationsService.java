@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.mypin.notifications.clients.ISynchronizationFeignClient;
 import com.mypin.notifications.dtos.NotificationDto;
+import com.mypin.notifications.dtos.SynchronizationDto;
 import com.mypin.notifications.exceptions.ResourceNotFoundException;
 import com.mypin.notifications.models.Notification;
 import com.mypin.notifications.repositories.INotificationsRepository;
@@ -14,15 +16,18 @@ import com.mypin.notifications.repositories.INotificationsRepository;
 public class NotificationsService implements INotificationsService {
 
 	private final INotificationsRepository notificationRepository;
+	private final ISynchronizationFeignClient synchronizationFeignClient;
 
-	public NotificationsService(INotificationsRepository notificationRepository) {
+	public NotificationsService(INotificationsRepository notificationRepository, ISynchronizationFeignClient synchronizationFeignClient) {
 		this.notificationRepository = notificationRepository;
+		this.synchronizationFeignClient = synchronizationFeignClient;
 	}
 
 	@Override
 	public Notification save(Notification notification) {
 		notification.setConfirmed(false);
 		// TODO: get and set userId
+		synchronizeNotification(notification);
 		return notificationRepository.save(notification);
 	}
 
@@ -65,5 +70,13 @@ public class NotificationsService implements INotificationsService {
 		notification.setContent(notificationDto.content);
 		return save(notification);
 	}
+	
+	private void synchronizeNotification(Notification notification) {
+		SynchronizationDto synchronizationDto = new SynchronizationDto();
+		synchronizationDto.channel = notification.getId().toString();
+		synchronizationDto.content = ""; // TODO fill map
+		synchronizationFeignClient.sendSynchronizationMessage(synchronizationDto);
+	}
+
 
 }
