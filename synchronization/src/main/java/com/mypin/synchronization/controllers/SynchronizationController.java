@@ -1,13 +1,9 @@
 package com.mypin.synchronization.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mypin.synchronization.dtos.MessageDto;
 import com.mypin.synchronization.dtos.SynchronizationDto;
 import com.mypin.synchronization.services.ISynchronizationService;
 
@@ -24,18 +20,14 @@ public class SynchronizationController implements ISynchronizationController {
 	}
 
 	@Override
-	public ResponseEntity sendSynchronizationMessage(@Valid SynchronizationDto synchronizationDto) {
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+	public ResponseEntity<SynchronizationDto> sendSynchronizationMessage(@Valid SynchronizationDto synchronizationDto) {
+		synchronizationService.send(synchronizationDto);
+		return ResponseEntity.status(HttpStatus.OK).body(synchronizationDto);
 	}
 
-	@Autowired
-	SimpMessagingTemplate simpMessagingTemplate;
-
-	@MessageMapping("/synchronize")
-	public SynchronizationDto send(SynchronizationDto message) throws Exception {
-		System.out.println(message.toString());
-		message.channel = "/all/messages";
-		synchronizationService.sendSynchronizationMessage(message);
+	@Override
+	public SynchronizationDto send(@Valid SynchronizationDto message) throws Exception {
+		synchronizationService.send(message);
 		return message;
 	}
 
