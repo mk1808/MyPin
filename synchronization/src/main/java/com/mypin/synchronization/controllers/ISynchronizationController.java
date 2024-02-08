@@ -20,5 +20,5 @@ public interface ISynchronizationController {
 	@PostMapping
 	public ResponseEntity sendSynchronizationMessage(@Valid @RequestBody SynchronizationDto synchronizationDto);
 
-	public MessageDto send(final MessageDto message) throws Exception;
+	public SynchronizationDto send(SynchronizationDto message) throws Exception;
 }

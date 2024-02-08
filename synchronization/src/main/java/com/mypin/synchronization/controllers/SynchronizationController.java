@@ -28,17 +28,15 @@ public class SynchronizationController implements ISynchronizationController {
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 
-	    @Autowired
-	    SimpMessagingTemplate simpMessagingTemplate;
+	@Autowired
+	SimpMessagingTemplate simpMessagingTemplate;
 
-	    @MessageMapping("/application")
-	    public MessageDto send(final MessageDto message) throws Exception {
-	    	SynchronizationDto dto = new SynchronizationDto();
-	    	dto.channel = "/all/messages";
-	    	dto.content="content1";
-	    	synchronizationService.sendSynchronizationMessage(dto);
-	        return message;
-	    }
-	
+	@MessageMapping("/synchronize")
+	public SynchronizationDto send(SynchronizationDto message) throws Exception {
+		System.out.println(message.toString());
+		message.channel = "/all/messages";
+		synchronizationService.sendSynchronizationMessage(message);
+		return message;
+	}
 
 }
