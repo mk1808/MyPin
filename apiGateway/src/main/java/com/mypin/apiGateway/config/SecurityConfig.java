@@ -21,21 +21,24 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
     	//TODO: fill with proper roles and uris
-        serverHttpSecurity.authorizeExchange(exchanges -> exchanges.pathMatchers(HttpMethod.GET).permitAll()
-                .pathMatchers("/eazybank/accounts/**").hasRole("ACCOUNTS")
-                .pathMatchers("/eazybank/cards/**").hasRole("CARDS")
-                .pathMatchers("/eazybank/loans/**").hasRole("LOANS"))
-                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(Customizer.withDefaults()));
-                        		//.jwtAuthenticationConverter(grantedAuthoritiesExtractor())));
+        serverHttpSecurity.authorizeExchange(exchanges -> exchanges.anyExchange().authenticated()
+        		.pathMatchers(HttpMethod.POST,"/USERS/api/register").permitAll()
+        		.pathMatchers(HttpMethod.GET,"/USERS/api").hasRole("MYPINADMIN")
+                .pathMatchers("/MAPS/api/**").hasRole("MYPINUSER")
+                .pathMatchers("/PINLISTS/api/**").hasRole("MYPINUSER")
+                .pathMatchers("/SYNCHRONIZATION/api/**").hasRole("MYPINUSER")
+                .pathMatchers("/NOTIFICATIONS/api/**").hasRole("MYPINUSER")
+                .pathMatchers("/USERS/api/**").hasRole("MYPINUSER"))
+                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(jwtSpec -> jwtSpec.jwtAuthenticationConverter(grantedAuthoritiesExtractor())));
         serverHttpSecurity.csrf(csrfSpec -> csrfSpec.disable());
         return serverHttpSecurity.build();
     }
-
+    
     private Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
         JwtAuthenticationConverter jwtAuthenticationConverter =
                 new JwtAuthenticationConverter();
-        //jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter
-           //     (new KeycloakRoleConverter());
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter
+                (new KeycloakRoleConverter());
         return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
     }
 
