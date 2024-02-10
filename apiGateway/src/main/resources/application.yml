@@ -9,6 +9,15 @@ spring:
       discovery:
         locator:
           enabled: true
+      httpclient:
+        ssl:
+          useInsecureTrustManager: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs"
+          useInsecureTrustManager: true
 
 info:
   app:
