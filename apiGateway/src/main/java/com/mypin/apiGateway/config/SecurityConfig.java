@@ -20,15 +20,16 @@ import reactor.core.publisher.Mono;
 public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
-    	//TODO: fill with proper roles and uris
-        serverHttpSecurity.authorizeExchange(exchanges -> exchanges.anyExchange().authenticated()
-        		.pathMatchers(HttpMethod.POST,"/USERS/api/register").permitAll()
+
+        serverHttpSecurity.authorizeExchange(exchanges -> exchanges
+        		.pathMatchers(HttpMethod.POST,"/USERS/api").permitAll()
         		.pathMatchers(HttpMethod.GET,"/USERS/api").hasRole("MYPINADMIN")
                 .pathMatchers("/MAPS/api/**").hasRole("MYPINUSER")
                 .pathMatchers("/PINLISTS/api/**").hasRole("MYPINUSER")
                 .pathMatchers("/SYNCHRONIZATION/api/**").hasRole("MYPINUSER")
                 .pathMatchers("/NOTIFICATIONS/api/**").hasRole("MYPINUSER")
-                .pathMatchers("/USERS/api/**").hasRole("MYPINUSER"))
+                .pathMatchers("/USERS/api/**").hasRole("MYPINUSER")
+                .anyExchange().authenticated())
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(jwtSpec -> jwtSpec.jwtAuthenticationConverter(grantedAuthoritiesExtractor())));
         serverHttpSecurity.csrf(csrfSpec -> csrfSpec.disable());
         return serverHttpSecurity.build();
