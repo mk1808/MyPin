@@ -12,6 +12,17 @@ spring:
       httpclient:
         ssl:
           useInsecureTrustManager: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PATCH
+              - PUT
+              - DELETE
   security:
     oauth2:
       resourceserver:
