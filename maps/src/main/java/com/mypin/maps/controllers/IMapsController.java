@@ -20,6 +20,7 @@ import com.mypin.maps.models.Map;
 import com.mypin.maps.models.Sharing;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -38,8 +39,8 @@ public interface IMapsController {
 			@RequestParam(defaultValue = "false", required = false) Boolean isSharedWithMe,
 			@RequestParam(defaultValue = "false", required = false) Boolean isMyOwn);
 
-	@PatchMapping("/{id}/name")
-	public ResponseEntity patchName(@PathVariable UUID id, @RequestParam String name);
+	@PatchMapping("/{id}/title")
+	public ResponseEntity patchTitle(@PathVariable UUID id, @RequestParam @NotBlank String title);
 
 	@PatchMapping("/{id}/updated")
 	public ResponseEntity patchUpdated(@PathVariable UUID id);

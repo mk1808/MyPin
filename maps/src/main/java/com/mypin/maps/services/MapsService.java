@@ -86,14 +86,14 @@ public class MapsService implements IMapsService {
 	}
 
 	@Override
-	public Map patchName(String name, UUID id) {
+	public Map patchTitle(String title, UUID id) {
 		// TODO: check if right user
 		Optional<Map> map = repository.findById(id);
 		if (map.isEmpty()) {
 			throw new ResourceNotFoundException("Map not found");
 		}
 		Map existingMap = map.get();
-		existingMap.setTitle(name);
+		existingMap.setTitle(title);
 		existingMap.setUpdatedDate(new Date());
 		synchronizeMap(existingMap);
 		return repository.save(existingMap);
@@ -154,7 +154,6 @@ public class MapsService implements IMapsService {
 	}
 	
 	private void synchronizeMap(Map map) {
-		
 		SynchronizationDto synchronizationDto = new SynchronizationDto();
 		synchronizationDto.channel = map.getId().toString();
 		synchronizationDto.content = ""; // TODO fill map

@@ -44,8 +44,8 @@ public class MapsController implements IMapsController {
 	}
 
 	@Override
-	public ResponseEntity patchName(UUID id, String name) {
-		mapsService.patchName(name, id);
+	public ResponseEntity patchTitle(UUID id, String title) {
+		mapsService.patchTitle(title, id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
