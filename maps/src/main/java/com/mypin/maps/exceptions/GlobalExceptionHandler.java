@@ -37,6 +37,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 	
-	
+	@ExceptionHandler(value = { RuntimeException.class })
+	protected ResponseEntity<ErrorDto> handleRuntimeException(RuntimeException ex, WebRequest request) {
+		ErrorDto e = new ErrorDto();
+		e.message = ex.getMessage();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+	}
 
 }
