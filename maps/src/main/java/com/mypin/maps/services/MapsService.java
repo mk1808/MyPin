@@ -125,7 +125,9 @@ public class MapsService implements IMapsService {
 		Sharing sharing = new Sharing();
 		sharing.setMapId(id);
 		sharing.setUserId(UUID.fromString("accd2a12-8d3b-438e-8a73-d12e3419030b"));
-		return sharingRepository.save(sharing);
+		sharingRepository.save(sharing);
+		sendSharingNotification(sharing);
+		return sharing;
 	}
 
 	@Override
@@ -158,6 +160,11 @@ public class MapsService implements IMapsService {
 		synchronizationDto.channel = map.getId().toString();
 		synchronizationDto.content = ""; // TODO fill map
 		synchronizationFeignClient.sendSynchronizationMessage(synchronizationDto);
+	}
+	
+	private void sendSharingNotification(Sharing sharing) {
+		NotificationDto notification = new NotificationDto(sharing.getUserId(), sharing.getUserId(), NotificationType.MAP_SHARED_TO_USER, "MAP_SHARED_TO_USER"); //TODO: fill content
+		notificationsFeignClient.create(notification);
 	}
 
 }
