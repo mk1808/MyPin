@@ -27,8 +27,9 @@ public class NotificationsService implements INotificationsService {
 	public Notification save(Notification notification) {
 		notification.setConfirmed(false);
 		// TODO: get and set userId
+		notificationRepository.save(notification);
 		synchronizeNotification(notification);
-		return notificationRepository.save(notification);
+		return notification;
 	}
 
 	@Override
@@ -73,8 +74,8 @@ public class NotificationsService implements INotificationsService {
 	
 	private void synchronizeNotification(Notification notification) {
 		SynchronizationDto synchronizationDto = new SynchronizationDto();
-		synchronizationDto.channel = notification.getId().toString();
-		synchronizationDto.content = ""; // TODO fill map
+		synchronizationDto.channel = notification.getOwnerId().toString();
+		synchronizationDto.content = notification.getContent(); // TODO fill content
 		synchronizationFeignClient.sendSynchronizationMessage(synchronizationDto);
 	}
 
