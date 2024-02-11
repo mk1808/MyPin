@@ -1,10 +1,13 @@
 package com.mypin.maps.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.mypin.maps.clients.INotificationsFeignClient;
 import com.mypin.maps.clients.ISynchronizationFeignClient;
 import com.mypin.maps.clients.IUsersFeignClient;
-import com.mypin.maps.dtos.AppUserDto;
 import com.mypin.maps.dtos.NotificationDto;
 import com.mypin.maps.dtos.SharingDto;
 import com.mypin.maps.dtos.SynchronizationDto;
@@ -132,19 +134,31 @@ public class MapsService implements IMapsService {
 
 	@Override
 	public void notify(UUID id) {
+		Map map = get(id);
 		List<Sharing> sharingList = sharingRepository.getByMapId(id);
 		if (!sharingList.isEmpty()) {
-			// TODO: get owner
-			final UUID ownerId = UUID.randomUUID();
-			List<NotificationDto> notifications = sharingList.stream().map(fillNotification(ownerId)).toList();
-			notifications.add(new NotificationDto(ownerId, ownerId, NotificationType.CALL_TO_MAP, "call"));
-			notifications.forEach(notification -> notificationsFeignClient.create(notification));
-
+			final UUID currentUserId = UUID.randomUUID();// TODO: get current userId
+			List<NotificationDto> notifications = new ArrayList<>();
+			notifications.addAll(sharingList.stream().map(fillCallToMapNotification(currentUserId)).toList());
+			notifications.add(fillCallToMapNotification(currentUserId, map.getOwnerId()));
+			notifications.stream().filter(filterNotCurrentUser(currentUserId)).forEach(sendNotification());
 		}
 	}
 
-	private Function<? super Sharing, NotificationDto> fillNotification(UUID ownerId) {
-		return sharing -> new NotificationDto(ownerId, sharing.getUserId(), NotificationType.CALL_TO_MAP, "call");
+	private Predicate<? super NotificationDto> filterNotCurrentUser(final UUID currentUserId) {
+		return notification -> !notification.ownerId.equals(currentUserId);
+	}
+
+	private Consumer<? super NotificationDto> sendNotification() {
+		return notification -> notificationsFeignClient.create(notification);
+	}
+
+	private Function<? super Sharing, NotificationDto> fillCallToMapNotification(UUID currentUserId) {
+		return sharing -> fillCallToMapNotification(sharing.getUserId(), currentUserId);
+	}
+	
+	private NotificationDto fillCallToMapNotification(UUID callingUserId, UUID targetUserId) {
+		return new NotificationDto(targetUserId, callingUserId, NotificationType.CALL_TO_MAP, "call");
 	}
 
 	@Override
