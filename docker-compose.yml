@@ -60,6 +60,8 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://mapsDb:5432/mapsDb"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
 
   pinListsDb:
     image: postgres
