@@ -37,6 +37,15 @@ spring:
           keycloak:
             issuer-uri: http://localhost:7080/realms/master
             user-name-attribute: preferred_username
+            
+keycloak:
+  admin-connection:
+    server-url: http://localhost:7080/
+    realm: master
+    username: admin
+    password: admin
+    clientId: admin-cli
+            
 logging:
   level:
     org:

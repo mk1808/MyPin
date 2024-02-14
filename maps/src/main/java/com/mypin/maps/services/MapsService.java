@@ -143,7 +143,7 @@ public class MapsService implements IMapsService {
 
 		Sharing sharing = new Sharing();
 		sharing.setMapId(id);
-		sharing.setUserId(UUID.fromString("accd2a12-8d3b-438e-8a73-d12e3419030b"));
+		sharing.setUserId(user.id);
 		sharingRepository.save(sharing);
 		sendSharingNotification(sharing);
 		return sharing;
