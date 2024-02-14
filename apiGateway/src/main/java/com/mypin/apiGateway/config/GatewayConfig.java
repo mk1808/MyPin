@@ -39,13 +39,13 @@ public class GatewayConfig {
 				
 				.route(p -> p.path("/MAPS/**")
 						.filters(f -> f.rewritePath("/MAPS/(?<segment>.*)", "/${segment}")
-								//.circuitBreaker(config -> config
-								//		.setName("mapsCircuitBreaker")
-								//		.setFallbackUri("forward:/contactSupport"))
-								//.retry(retryConfig -> retryConfig
-								//		.setRetries(3)
-								//		.setMethods(HttpMethod.GET)
-								//		.setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
+								.circuitBreaker(config -> config
+										.setName("mapsCircuitBreaker")
+										.setFallbackUri("forward:/contactSupport"))
+								.retry(retryConfig -> retryConfig
+										.setRetries(3)
+										.setMethods(HttpMethod.GET)
+										.setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
 								.requestRateLimiter(config -> config
 										.setRateLimiter(redisRateLimiter())
 										.setKeyResolver(keyResolver())))
