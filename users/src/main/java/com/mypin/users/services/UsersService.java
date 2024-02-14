@@ -3,6 +3,8 @@ package com.mypin.users.services;
 import java.util.List;
 import java.util.UUID;
 
+import org.keycloak.admin.client.Keycloak;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
 
 import com.mypin.users.dtos.RegisterDto;
@@ -15,10 +17,12 @@ import com.mypin.users.repositories.IUsersRepository;
 @Service
 public class UsersService implements IUsersService {
 	private final IUsersRepository repository;
+	private final Keycloak keycloak;
 
-	public UsersService(IUsersRepository repository) {
+	public UsersService(IUsersRepository repository, Keycloak keycloak) {
 		super();
 		this.repository = repository;
+		this.keycloak = keycloak;
 	}
 
 	@Override
@@ -62,7 +66,17 @@ public class UsersService implements IUsersService {
 
 	@Override
 	public AppUser getByEmail(String email) {
-		return repository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+		List<UserRepresentation> usersByEmail = keycloak.realm("master").users().searchByEmail(email, true);
+		if (!usersByEmail.isEmpty()) {
+			UserRepresentation userByEmail = usersByEmail.get(0);
+			AppUser user = new AppUser();
+			user.setId(UUID.fromString(userByEmail.getId()));
+			user.setEmail(userByEmail.getEmail());
+			user.setLogin(userByEmail.getUsername());
+			return user;
+		}
+		
+		return null;
 	}
 
 }
