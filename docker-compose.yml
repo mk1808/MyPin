@@ -129,6 +129,8 @@ services:
         condition: service_healthy
       mapsDb:
         condition: service_healthy
+      keycloakDb:
+        condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://pinListsDb:5432/pinListsDb"
@@ -168,6 +170,8 @@ services:
       eureka:
         condition: service_healthy
       usersDb:
+        condition: service_healthy
+      keycloakDb:
         condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
@@ -209,6 +213,8 @@ services:
         condition: service_healthy
       notificationsDb:
         condition: service_healthy
+      keycloakDb:
+        condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://notificationsDb:5432/notificationsDb"
@@ -228,6 +234,8 @@ services:
       start_period: 10s
     depends_on:
       eureka:
+        condition: service_healthy
+      keycloakDb:
         condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
