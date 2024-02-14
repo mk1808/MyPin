@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.mypin.maps.clients.INotificationsFeignClient;
 import com.mypin.maps.clients.ISynchronizationFeignClient;
 import com.mypin.maps.clients.IUsersFeignClient;
+import com.mypin.maps.dtos.AppUserDto;
 import com.mypin.maps.dtos.NotificationDto;
 import com.mypin.maps.dtos.SharingDto;
 import com.mypin.maps.dtos.SynchronizationDto;
@@ -119,14 +120,15 @@ public class MapsService implements IMapsService {
 		if (map.isEmpty()) {
 			throw new ResourceNotFoundException("Map not found");
 		}
-		/*AppUserDto user = usersFeignClient.getByEmail(sharingDto.email).getBody();
+		
+		AppUserDto user = usersFeignClient.getByEmail(sharingDto.email).getBody();
 		if (user == null) {
 			throw new ResourceNotFoundException("User with email not found");
-		}*/
+		}
 		
 		Sharing sharing = new Sharing();
 		sharing.setMapId(id);
-		sharing.setUserId(UUID.fromString("accd2a12-8d3b-438e-8a73-d12e3419030b"));
+		sharing.setUserId(user.id);
 		sharingRepository.save(sharing);
 		sendSharingNotification(sharing);
 		return sharing;
