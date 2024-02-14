@@ -13,6 +13,29 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs"
+          useInsecureTrustManager: true
+          issuer-uri: http://localhost:7080/realms/master
+      client:
+        registration:
+          keycloak:
+            client-id: notifications-microservice
+            authorization-grant-type: authorization_code
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:7080/realms/master
+            user-name-attribute: preferred_username
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
 
 info:
   app:

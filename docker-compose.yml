@@ -132,6 +132,8 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://pinListsDb:5432/pinListsDb"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
 
   usersDb:
     image: postgres
@@ -170,6 +172,8 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://usersDb:5432/usersDb"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
 
   notificationsDb:
     image: postgres
@@ -208,6 +212,8 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://notificationsDb:5432/notificationsDb"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
 
   synchronization:
     image: "mk1808/synchronization:v1"
@@ -225,6 +231,8 @@ services:
         condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
     
   redis:
     image: redis
