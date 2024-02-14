@@ -35,11 +35,6 @@ public class MapsController implements IMapsController {
 
 	@Override
 	public ResponseEntity<Map> get(UUID id) {
-		
-		SecurityContext context = SecurityContextHolder.getContext();
-		String name = context.getAuthentication().getName();
-		System.out.println("name: "+name);
-		
 		Map map = mapsService.get(id);
 		return ResponseEntity.status(HttpStatus.OK).body(map);
 	}
