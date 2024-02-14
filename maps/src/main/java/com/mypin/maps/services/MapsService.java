@@ -215,7 +215,7 @@ public class MapsService implements IMapsService {
 		UUID user = getCurrentUser();
 		List<Sharing> sharingList = sharingRepository.getByMapId(map.getId());
 		List<UUID> usersWithPermissions = sharingList.stream().map(sharing -> sharing.getUserId()).toList();
-		return usersWithPermissions.contains(user);
+		return usersWithPermissions.contains(user) || map.getOwnerId().equals(user);
 	}
 
 }

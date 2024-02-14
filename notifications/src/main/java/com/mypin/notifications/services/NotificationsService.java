@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.mypin.notifications.clients.ISynchronizationFeignClient;
 import com.mypin.notifications.dtos.NotificationDto;
 import com.mypin.notifications.dtos.SynchronizationDto;
+import com.mypin.notifications.exceptions.ForbiddenException;
 import com.mypin.notifications.exceptions.ResourceNotFoundException;
 import com.mypin.notifications.models.Notification;
 import com.mypin.notifications.repositories.INotificationsRepository;
@@ -26,7 +29,7 @@ public class NotificationsService implements INotificationsService {
 	@Override
 	public Notification save(Notification notification) {
 		notification.setConfirmed(false);
-		// TODO: get and set userId
+		notification.setOwnerId(getCurrentUser());
 		notificationRepository.save(notification);
 		synchronizeNotification(notification);
 		return notification;
@@ -40,26 +43,28 @@ public class NotificationsService implements INotificationsService {
 	@Override
 	public Notification get(UUID id) {
 		return notificationRepository.findById(id).orElseThrow(() -> {
-			throw new ResourceNotFoundException("User with email not found");
+			throw new ResourceNotFoundException("Notification with id not found");
 		});
 	}
 
 	@Override
 	public void delete(UUID id) {
-		get(id);
 	}
 
 	@Override
 	public void confirm(UUID id) {
 		Notification notification = get(id);
+		if (!hasPermissionsToReceive(notification)) {
+			throw new ForbiddenException("User does not have rights to notification");
+		}
+		
 		notification.setConfirmed(true);
 		notificationRepository.save(notification);
 	}
 
 	@Override
 	public List<Notification> getUserNotifications() {
-		// TODO: get owner
-		return notificationRepository.findByOwnerIdOrderByConfirmedAscUpdatedDateDesc(UUID.fromString("2c19fd33-67f2-4379-921a-3ab17ae9b05b"));
+		return notificationRepository.findByOwnerIdOrderByConfirmedAscUpdatedDateDesc(getCurrentUser());
 	}
 
 	@Override
@@ -77,6 +82,19 @@ public class NotificationsService implements INotificationsService {
 		synchronizationDto.channel = notification.getOwnerId().toString();
 		synchronizationDto.content = notification.getContent(); // TODO fill content
 		synchronizationFeignClient.sendSynchronizationMessage(synchronizationDto);
+	}
+
+	private UUID getCurrentUser() {
+		SecurityContext context = SecurityContextHolder.getContext();
+		String uuid = context.getAuthentication().getName();
+
+		System.out.println("name: " + uuid);
+		return UUID.fromString(uuid);
+	}
+	
+	private boolean hasPermissionsToReceive(Notification notification) {
+		UUID user = getCurrentUser();
+		return notification.getUserId().equals(user);
 	}
 
 
