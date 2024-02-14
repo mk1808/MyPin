@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mypin.maps.dtos.SharingDto;
@@ -33,6 +35,11 @@ public class MapsController implements IMapsController {
 
 	@Override
 	public ResponseEntity<Map> get(UUID id) {
+		
+		SecurityContext context = SecurityContextHolder.getContext();
+		String name = context.getAuthentication().getName();
+		System.out.println("name: "+name);
+		
 		Map map = mapsService.get(id);
 		return ResponseEntity.status(HttpStatus.OK).body(map);
 	}

@@ -1,16 +1,46 @@
 version: '3.9'
 
 services:
+
+  keycloakDb:
+    image: postgres
+    container_name: keycloakDb
+    ports:
+      - 7081:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - E:/myPin_dbFiles/keycloakDb:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=keycloakDb
+
   keycloak:
-      image: quay.io/keycloak/keycloak:22.0.1
-      container_name: keycloak
-      ports:
-        - "7080:8080"
-      environment:
-        KEYCLOAK_ADMIN: "admin"
-        KEYCLOAK_ADMIN_PASSWORD: "admin"
-      command: "start-dev"
-  
+    image: quay.io/keycloak/keycloak:22.0.1
+    container_name: keycloak
+    ports:
+      - "7080:8080"
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloakDb
+      KC_DB_URL_DATABASE: keycloakDb
+      KC_DB_PASSWORD: admin
+      KC_DB_USERNAME: admin
+      KC_DB_SCHEMA: public
+    links:
+      - keycloakDb
+    depends_on:
+      keycloakDb:
+        condition: service_healthy
+    command: start-dev    
+
   eureka:
     image: "mk1808/eureka:v1"
     container_name: eureka-ms
@@ -57,9 +87,13 @@ services:
         condition: service_healthy
       mapsDb:
         condition: service_healthy
+      keycloakDb:
+        condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://mapsDb:5432/mapsDb"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
 
   pinListsDb:
     image: postgres
@@ -95,9 +129,13 @@ services:
         condition: service_healthy
       mapsDb:
         condition: service_healthy
+      keycloakDb:
+        condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://pinListsDb:5432/pinListsDb"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
 
   usersDb:
     image: postgres
@@ -133,9 +171,13 @@ services:
         condition: service_healthy
       usersDb:
         condition: service_healthy
+      keycloakDb:
+        condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://usersDb:5432/usersDb"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
 
   notificationsDb:
     image: postgres
@@ -171,9 +213,13 @@ services:
         condition: service_healthy
       notificationsDb:
         condition: service_healthy
+      keycloakDb:
+        condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://notificationsDb:5432/notificationsDb"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
 
   synchronization:
     image: "mk1808/synchronization:v1"
@@ -189,8 +235,12 @@ services:
     depends_on:
       eureka:
         condition: service_healthy
+      keycloakDb:
+        condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8070/eureka/"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI: http://keycloak:8080/realms/master
     
   redis:
     image: redis
