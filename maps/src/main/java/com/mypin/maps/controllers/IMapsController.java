@@ -20,6 +20,7 @@ import com.mypin.maps.models.Map;
 import com.mypin.maps.models.Sharing;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -33,20 +34,21 @@ public interface IMapsController {
 	public ResponseEntity<Map> get(@PathVariable UUID id);
 
 	@GetMapping("/search")
-	public ResponseEntity<List<Map>> search(
-			@RequestParam String title, @RequestParam MapSort sort,
-			@RequestParam Boolean isSharedWithMe, @RequestParam Boolean isMyOwn);
+	public ResponseEntity<List<Map>> search(@RequestParam(defaultValue = "", required = false) String title,
+			@RequestParam(defaultValue = "UPDATED_DESC", required = false) MapSort sort,
+			@RequestParam(defaultValue = "false", required = false) Boolean isSharedWithMe,
+			@RequestParam(defaultValue = "false", required = false) Boolean isMyOwn);
 
-	@PatchMapping("/{id}/name")
-	public ResponseEntity patchName(@PathVariable UUID id, @RequestParam String name);
-	
+	@PatchMapping("/{id}/title")
+	public ResponseEntity patchTitle(@PathVariable UUID id, @RequestParam @NotBlank String title);
+
 	@PatchMapping("/{id}/updated")
 	public ResponseEntity patchUpdated(@PathVariable UUID id);
-	
+
 	@PostMapping("/{id}/share")
 	public ResponseEntity<Sharing> share(@PathVariable UUID id, @Valid @RequestBody SharingDto sharingDto);
-	
+
 	@PostMapping("/{id}/notify")
 	public ResponseEntity notify(@PathVariable UUID id);
-	
+
 }

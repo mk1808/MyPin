@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 @Service
 public interface IMapsService extends ICrudService<Map>{
 	
-	public Map patchName(String name, UUID id);
+	public Map patchTitle(String title, UUID id);
 	
 	public Map patchUpdated(UUID id);
 
