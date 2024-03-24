@@ -26,4 +26,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		e.message = ex.getMessage();
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
 	}
+	
+	@ExceptionHandler(value = { ForbiddenException.class })
+	protected ResponseEntity<ErrorDto> handleForbidden(RuntimeException ex, WebRequest request) {
+		ErrorDto e = new ErrorDto();
+		e.message = ex.getMessage();
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e);
+
+	}
 }
