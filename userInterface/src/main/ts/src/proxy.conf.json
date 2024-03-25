@@ -1,0 +1,22 @@
+{
+  "/USERS": {
+    "target": "http://localhost:8072",
+    "secure": false
+  },
+  "/MAPS": {
+    "target": "http://localhost:8072",
+    "secure": false
+  },
+  "/PINLISTS": {
+    "target": "http://localhost:8072",
+    "secure": false
+  },
+  "/SYNCHRONIZATION": {
+    "target": "http://localhost:8072",
+    "secure": false
+  },
+  "/NOTIFICATIONS": {
+    "target": "http://localhost:8072",
+    "secure": false
+  }
+}
