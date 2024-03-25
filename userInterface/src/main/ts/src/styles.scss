@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'assets/variables';
+
+body {
+  --tui-base-01: #{$page-primary-background}; //Page primary background and icon fill for color inverted background 
+  --tui-base-02: #{$page-secondary-background}; //Page secondary background,  tile on primary background and background of static marker icons 
+
+  --tui-primary: #{$primary}; //Background of buttons,;  marker icons 
+  --tui-primary-hover: #{$primary-hover}; //Hovered state background of buttons,;  marker icons 
+  --tui-primary-active: #{$primary-active}; //Active state background of buttons 
+  --tui-secondary: #{$secondary}; //Background of input field and secondary buttons 
+  --tui-secondary-hover: #{$secondary-hover}; //Hovered state background of input field and secondary buttons 
+  --tui-secondary-active: #{$secondary-active}; //Active state background of input field and secondary buttons 
+  --tui-accent: #{$accent}; //Background of accent icons or buttons 
+  --tui-accent-hover: #{$accent-hover}; //Hovered state background of accent icons or buttons 
+  --tui-accent-active: #{$accent-active}; //Active state background of accent icons or buttons 
+  --tui-link: #{$link};
+}
