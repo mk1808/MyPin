@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .pathMatchers("/SYNCHRONIZATION/api/**").hasRole("MYPINUSER")
                 .pathMatchers("/NOTIFICATIONS/api/**").hasRole("MYPINUSER")
                 .pathMatchers("/USERS/api/**").hasRole("MYPINUSER")
+        		.pathMatchers("/USERINTERFACE/**").permitAll()
                 .anyExchange().authenticated())
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(jwtSpec -> jwtSpec.jwtAuthenticationConverter(grantedAuthoritiesExtractor())));
         serverHttpSecurity.csrf(csrfSpec -> csrfSpec.disable());
