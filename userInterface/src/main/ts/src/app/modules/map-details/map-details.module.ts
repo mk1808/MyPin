@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MapDetailsRoutingModule } from './map-details-routing.module';
+import { MapDetailsComponent } from './map-details.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    MapDetailsComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    MapDetailsRoutingModule
   ]
 })
 export class MapDetailsModule { }
