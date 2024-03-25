@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MapListRoutingModule } from './map-list-routing.module';
-import { MapListComponent } from './map-list.component';
+import { MapListComponent } from './components/map-list.component';
 
 
 @NgModule({

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MapDetailsRoutingModule } from './map-details-routing.module';
-import { MapDetailsComponent } from './map-details.component';
+import { MapDetailsComponent } from './components/map-details.component';
 
 
 @NgModule({

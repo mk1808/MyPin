@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MapListComponent } from './map-list.component';
+import { MapListComponent } from './components/map-list.component';
 
 const routes: Routes = [{ path: '', component: MapListComponent }];
 
