@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { TuiAccordionModule, TuiInputModule } from "@taiga-ui/kit";
 import { UNIVERSAL_PROVIDERS } from "@ng-web-apis/universal";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { UNIVERSAL_PROVIDERS } from "@ng-web-apis/universal";
     TuiButtonModule,
     TuiAccordionModule,
     TuiTooltipModule,
+    NgxSpinnerModule
 
   ],
   providers: [
