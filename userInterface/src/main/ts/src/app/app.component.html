@@ -175,13 +175,13 @@
       }
     }
 
-    .animate-box{
+    .animate-box {
       height: 90px;
-      width:90px;
+      width: 90px;
       background-color: cadetblue;
     }
 
-    .icon{
+    .icon {
       font-size: xxx-large;
     }
   </style>
@@ -222,7 +222,7 @@
         <h1>Testowy tekst <tui-tooltip content="Supports basic <strong>HTML</strong>" direction="right"></tui-tooltip>
         </h1>
         <tui-svg src="tuiIconHeadphonesLarge"></tui-svg>
-        
+
         <button size="m" tuiButton type="button" (click)="open()" tuiHint="Custom host with text tooltip"
           [tuiHintManual]="true">
           Default button
@@ -365,6 +365,12 @@
 
     <div class="animate-box" [@jello]="animationState"></div>
     <ng-icon class="icon" name="ionFish"></ng-icon>
+
+    <nav>
+      <ul>
+        <li><a routerLink="/maps" routerLinkActive="active" ariaCurrentWhenActive="page">Maps module</a></li>
+      </ul>
+    </nav>
 
   </main>
 

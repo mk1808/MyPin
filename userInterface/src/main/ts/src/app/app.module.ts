@@ -12,6 +12,11 @@ import { UNIVERSAL_PROVIDERS } from "@ng-web-apis/universal";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgIconsModule } from "@ng-icons/core";
 import { ionFish } from '@ng-icons/ionicons';
+import { MapDetailsModule } from "./modules/map-details/map-details.module";
+import { MapListModule } from "./modules/map-list/map-list.module";
+import { SharedModule } from "./shared/shared.module";
+import { CoreModule } from "./core/core.module";
+import { PlaygroundModule } from "./modules/playground/playground.module";
 
 @NgModule({
   declarations: [
@@ -35,6 +40,11 @@ import { ionFish } from '@ng-icons/ionicons';
     TuiSvgModule,
     NgIconsModule.withIcons({ ionFish }),
 
+    CoreModule,
+    SharedModule,
+    MapDetailsModule,
+    MapListModule,
+    PlaygroundModule
   ],
   providers: [
     UNIVERSAL_PROVIDERS,
