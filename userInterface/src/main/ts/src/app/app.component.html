@@ -180,6 +180,10 @@
       width:90px;
       background-color: cadetblue;
     }
+
+    .icon{
+      font-size: xxx-large;
+    }
   </style>
 
   <main class="main">
@@ -217,6 +221,8 @@
 
         <h1>Testowy tekst <tui-tooltip content="Supports basic <strong>HTML</strong>" direction="right"></tui-tooltip>
         </h1>
+        <tui-svg src="tuiIconHeadphonesLarge"></tui-svg>
+        
         <button size="m" tuiButton type="button" (click)="open()" tuiHint="Custom host with text tooltip"
           [tuiHintManual]="true">
           Default button
@@ -358,6 +364,7 @@
     </div>
 
     <div class="animate-box" [@jello]="animationState"></div>
+    <ng-icon class="icon" name="ionFish"></ng-icon>
 
   </main>
 
