@@ -93,6 +93,20 @@ public class GatewayConfig {
 										.setKeyResolver(keyResolver())))
 						.uri("lb://NOTIFICATIONS"))			
 				
+				.route(p -> p.path("/USERINTERFACE/**")
+						.filters(f -> f.rewritePath("/USERINTERFACE/(?<segment>.*)", "/${segment}")
+								.circuitBreaker(config -> config
+										.setName("userInterfaceCircuitBreaker")
+										.setFallbackUri("forward:/contactSupport"))
+								.retry(retryConfig -> retryConfig
+										.setRetries(3)
+										.setMethods(HttpMethod.GET)
+										.setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
+								.requestRateLimiter(config -> config
+										.setRateLimiter(redisRateLimiter())
+										.setKeyResolver(keyResolver())))
+						.uri("lb://USERINTERFACE"))		
+				
 				.build();
 	}
 
