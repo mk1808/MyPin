@@ -398,6 +398,34 @@
   </div>
 
 
+  <div class="flex-container as-column" [ngStyle]="{background:'gray', width:'1200px'}">
+
+    <div class="flex-container equal-width align-stretch" [ngStyle]="{background:'blue', 'height':'50px'}">
+
+      <div [ngStyle]="{background:'green'}">wiersz, equal-width - równe szerokości kolumn, 'height':'50px'</div>
+      <div [ngStyle]="{background:'yellow'}"> wypełnienie </div>
+
+    </div>
+    <div class="flex-container equal-width align-stretch" [ngStyle]="{background:'#444', 'height':'300px'}">
+
+      <div [ngStyle]="{background:'#b4a'}">wiersz, 'height':'300px', szerokości kolumn 1:4 (flex grow drugiej kolumny -
+        4)</div>
+
+      <div class="flex-container as-column " [ngStyle]="{background:'#123', 'flex-grow':'4'}">
+
+        <div class="flex-container  " [ngStyle]="{background:'#444', 'height':'100px'}">
+          <div [ngStyle]="{background:'#aaa', width:'600px'}">wiersz 'height':'100px', kolumna width:'600px'</div>
+          <div class="fill" [ngStyle]="{background:'#188'}">wypełnienie</div>
+        </div>
+
+        <div class="fill" [ngStyle]="{background:'#15a'}">wypełnienie</div>
+
+      </div>
+
+    </div>
+  </div>
+
+
 
   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
   <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
