@@ -1,0 +1,21 @@
+<nav style="margin:10px">
+    <ul>
+      <li><a routerLink="/maps" routerLinkActive="active" ariaCurrentWhenActive="page">Maps module</a></li>
+      <li><a routerLink="/maps/2" routerLinkActive="active" ariaCurrentWhenActive="page">Maps details module</a></li>
+      <li><a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a></li>
+    </ul>
+  </nav>
+
+  <h1 *ngIf="!userName">Welcome!</h1>
+<h1 *ngIf="userName">Hello, {{userName}}!</h1>
+<p>Welcome to this demo-application.</p>
+<p>
+    <button (click)="login()" class="btn btn-default">Login</button>
+    <button (click)="logout()" class="btn btn-default">Logout</button>
+</p>    
+<p>
+    Username/Passwort: max/geheim
+</p>
+<button (click)="test()" class="btn btn-default">test</button>
+
+{{accessToken}}
