@@ -10,6 +10,8 @@ export class HomeComponent {
   constructor(private oauthService: OAuthService, private oauthlogger:OAuthLogger) {
   }
 
+  accessToken="";
+
   public login() {
       this.oauthService.initImplicitFlow();
   }
@@ -28,5 +30,6 @@ export class HomeComponent {
 
   public test(){
     let a=0;
+    this.accessToken = this.oauthService.getAccessToken();
   }
 }
