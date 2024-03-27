@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  background-color: var(--tui-base-02);
+}
+
+footer {
+  width: 1000px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.logo {
+  height: 100px;
+}
+
+.author {
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+  transition-duration: 300ms;
+  transition-property: background-color;
+  border-radius: 20px;
+
+  &:hover {
+    background-color: #fde9db;
+  }
+}
+
+ng-icon {
+  font-size: 30px;
+}
