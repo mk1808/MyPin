@@ -4,6 +4,7 @@ import { TuiDialogService } from '@taiga-ui/core';
 import { jelloAnimation } from 'angular-animations';
 
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MapsApiService } from '../../../core/services/api/maps-api.service';
 
 @Component({
   selector: 'app-playground',
@@ -21,7 +22,8 @@ export class PlaygroundComponent implements OnInit{
   constructor(
     @Inject(TuiDialogService)
     private readonly dialogs: TuiDialogService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private mapsService:MapsApiService
   ) {
 
   }
@@ -32,7 +34,8 @@ export class PlaygroundComponent implements OnInit{
      setTimeout(() => {
        this.spinner.hide();
      }, 1000);*/
-    this.animate()
+    this.animate();
+    
   }
 
   open() {
@@ -45,5 +48,12 @@ export class PlaygroundComponent implements OnInit{
       this.animationState = true;
 
     }, 5000);
+  }
+
+  send(){
+    console.log("sending...")
+    this.mapsService.get('2b17e16e-0153-4d7c-9881-d07bbdb23ada').subscribe(x=>{
+      console.log(x);
+    })
   }
 }

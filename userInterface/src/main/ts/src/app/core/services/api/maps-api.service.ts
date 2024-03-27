@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { RestService } from '../rest.service';
 import { Observable } from 'rxjs';
+import { MpMap } from '../../models/MpMap';
+import { MapSort } from '../../models/MapSort';
+import { Sharing } from '../../models/Sharing';
+import { SharingDto } from '../../models/SharingDto';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +15,7 @@ export class MapsApiService {
   constructor(private restService: RestService) { }
 
   create(map: MpMap): Observable<MpMap> {
-    return this.restService.post(`${this.apiURL}`, map);
+    return this.restService.post(`${this.apiURL}`, map); 
   }
 
   get(id: string): Observable<MpMap | null> {
