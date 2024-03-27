@@ -1,5 +1,69 @@
 <p>playground works!</p>
 
+
+
+<header tuiNavigationHeader class="header">
+  <button appearance="secondary" iconLeft="tuiIconGrid" tuiIconButton>
+    Menu
+  </button>
+  <span tuiNavigationLogo>
+    <!--<tui-icon icon="tuiIconHome" />-->
+    <span tuiFade>A very very long product name</span>
+    <tui-badge>Test</tui-badge>
+  </span>
+  <button [tuiDropdown]="dropdownContent" [tuiDropdownManual]="isOpen" (click)="onClick()">
+    Host element
+  </button>
+
+  <ng-template #dropdownContent>Dropdown content</ng-template>
+
+  <!--  <button
+      appearance="secondary"
+      iconRight="tuiIconChevronDown"
+      tuiButton
+ 
+      [tuiDropdown]="products"
+  >tuiDropdownOpen
+      <span tuiFade>A very very long project</span>
+      <ng-template #products>
+          <tui-data-list size="s">
+              <button tuiOption>
+                  A very very long project
+                 <tui-icon
+                      icon="tuiIconCheck"
+                      [style.font-size.em]="1"
+                      [style.margin-left.rem]="0.5"
+                  />
+              </button>
+              <button tuiOption>Something else</button>
+          </tui-data-list>
+      </ng-template>
+  </button>-->
+  <hr />
+  <button appearance="secondary" iconLeft="tuiIconPlus" tuiButton>
+    Create
+  </button>
+  <button iconLeft="tuiIconBell" tuiIconButton>
+    Notifications
+    <tui-badge-notification />
+  </button>
+  <button iconLeft="tuiIconMoreHorizontal" tuiIconButton>
+    More
+  </button>
+  <tui-avatar src="AI" />
+</header>
+
+<header  tuiNavigationHeader class="header">Header content
+
+
+  <a routerLink="/components/link" tuiLink>Link1
+  </a>
+
+
+  <a routerLink="/components/link" tuiLink>Link2
+  </a>
+</header>
+
 <style>
     :host {
       --bright-blue: oklch(51.01% 0.274 263.83);
@@ -175,6 +239,11 @@
 
     .icon {
       font-size: xxx-large;
+    }
+
+    .header{
+      margin-top:20px;
+      margin-bottom:20px;
     }
   </style>
 

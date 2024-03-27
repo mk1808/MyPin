@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { PlaygroundRoutingModule } from './playground-routing.module';
 import { PlaygroundComponent } from './components/playground.component';
-import { TUI_SANITIZER, TuiRootModule, TuiDialogModule, TuiAlertModule, TuiTextfieldControllerModule, TuiHintModule, TuiButtonModule, TuiTooltipModule, TuiSvgModule } from "@taiga-ui/core";
+import { TUI_SANITIZER, TuiRootModule, TuiDialogModule, TuiAlertModule, TuiTextfieldControllerModule, TuiHintModule, TuiButtonModule, TuiTooltipModule, TuiSvgModule, TuiDataListModule, TuiDropdownModule, TuiDriver, TuiLinkModule } from "@taiga-ui/core";
 
 import { ReactiveFormsModule } from "@angular/forms";
 import { TuiAccordionModule, TuiInputModule } from "@taiga-ui/kit";
@@ -16,6 +16,7 @@ import { UNIVERSAL_PROVIDERS } from "@ng-web-apis/universal";
 import { provideClientHydration } from '@angular/platform-browser';
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
 import { AuthRoutingComponent } from './components/auth-routing/auth-routing.component';
+import { TuiAvatarModule, TuiBadgeModule, TuiBadgeNotificationModule, TuiIconComponent, TuiNavigationModule } from '@taiga-ui/experimental';
 
 
 @NgModule({
@@ -39,6 +40,14 @@ import { AuthRoutingComponent } from './components/auth-routing/auth-routing.com
     NgxSpinnerModule,
     TuiSvgModule,
     NgIconsModule.withIcons({ ionFish }),
+    TuiNavigationModule,
+    TuiAvatarModule,
+    TuiDataListModule,
+    TuiBadgeNotificationModule,
+    TuiDropdownModule,
+    TuiBadgeModule,
+    TuiLinkModule
+    
   ],
   providers: [
     UNIVERSAL_PROVIDERS,

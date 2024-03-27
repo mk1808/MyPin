@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './playground.component.scss',
   animations: [jelloAnimation()]
 })
-export class PlaygroundComponent implements OnInit{
+export class PlaygroundComponent implements OnInit {
   title = 'my-pin';
   animationState = false;
   readonly testForm = new FormGroup({
@@ -45,5 +45,10 @@ export class PlaygroundComponent implements OnInit{
       this.animationState = true;
 
     }, 5000);
+  }
+
+  isOpen = false;
+  onClick(): void {
+    this.isOpen = !this.isOpen;
   }
 }
