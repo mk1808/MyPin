@@ -1,5 +1,5 @@
 
-interface NotificationDto {
+export interface NotificationDto {
     ownerId: string,
     userId: string,
     type: string,

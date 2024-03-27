@@ -1,1 +1,22 @@
-test header
+<header tuiNavigationHeader>
+  <span tuiNavigationLogo>
+    <img src="assets/images/logo.png" alt="MyPin Logo" class="logo" />
+    My Pin
+  </span>
+  <hr />
+  <button appearance="flat" tuiButton type="button" size="s" routerLink="/home" routerLinkActive="active">
+    Strona główna
+  </button>
+  <button appearance="flat" tuiButton type="button" size="s" *ngIf="!isLogged" (click)="login()">
+    Zaloguj
+  </button>
+  <button appearance="flat" tuiButton type="button" size="s" routerLink="/maps" routerLinkActive="active"
+    *ngIf="isLogged">
+    Mapy
+  </button>
+  <ng-icon class="icon" name="ionNotificationsOutline" *ngIf="isLogged"></ng-icon>
+  <ng-icon class="icon active" name="ionNotifications" *ngIf="isLogged"></ng-icon>
+  <button appearance="flat" tuiButton type="button" size="s" *ngIf="isLogged" (click)="login()">
+    Wyloguj
+  </button>
+</header>

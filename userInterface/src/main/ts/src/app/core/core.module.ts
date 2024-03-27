@@ -4,8 +4,11 @@ import { PermissionsService } from './guards/map-details.guard';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgIconsModule } from '@ng-icons/core';
-import { ionLogoGithub } from '@ng-icons/ionicons';
+import { ionLogoGithub, ionNotificationsOutline, ionNotifications } from '@ng-icons/ionicons';
 import { RouterModule } from '@angular/router';
+import { TuiNavigationModule } from '@taiga-ui/experimental';
+import { TuiButtonModule } from '@taiga-ui/core';
+import { TuiBadgedContentModule } from '@taiga-ui/kit';
 
 
 @NgModule({
@@ -15,8 +18,11 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    NgIconsModule.withIcons({ ionLogoGithub }),
-    RouterModule
+    NgIconsModule.withIcons({ ionLogoGithub, ionNotificationsOutline, ionNotifications }),
+    RouterModule,
+    TuiNavigationModule,
+    TuiButtonModule,
+    TuiBadgedContentModule,
   ],
   providers: [
     PermissionsService

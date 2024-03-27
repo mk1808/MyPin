@@ -5,6 +5,7 @@
 body {
   --tui-base-01: #{$page-primary-background}; //Page primary background and icon fill for color inverted background 
   --tui-base-02: #{$page-secondary-background}; //Page secondary background,  tile on primary background and background of static marker icons 
+  --tui-theme-color: #{$page-secondary-background};
 
   --tui-primary: #{$primary}; //Background of buttons,;  marker icons 
   --tui-primary-hover: #{$primary-hover}; //Hovered state background of buttons,;  marker icons 
