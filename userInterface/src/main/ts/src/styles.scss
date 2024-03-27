@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'assets/variables';
+@import 'assets/styles/variables';
+@import 'assets/styles/layout';
 
 body {
   --tui-base-01: #{$page-primary-background}; //Page primary background and icon fill for color inverted background 
