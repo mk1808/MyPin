@@ -1,5 +1,5 @@
 
-interface MpMap {
+export interface MpMap {
     id: string,
     title: string,
     ownerId: string,
